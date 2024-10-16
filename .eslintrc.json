@@ -1,0 +1,24 @@
+{
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "warn",
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "sort-imports": ["error", { "ignoreDeclarationSort": true }],
+    "react/no-unused-prop-types": "error",
+    "react/prefer-stateless-function": "error",
+    "react/sort-default-props": "error",
+    "react/jsx-fragments": "error",
+    "react/jsx-pascal-case": "error",
+    "react/void-dom-elements-no-children": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "import/export": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-absolute-path": "error",
+    "import/no-cycle": "error",
+    "import/no-mutable-exports": "error"
+  }
+}
