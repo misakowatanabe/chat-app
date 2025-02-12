@@ -112,3 +112,25 @@ export const signOutAction = async () => {
   await supabase.auth.signOut()
   return redirect('/sign-in')
 }
+
+// TODO: add proper return values
+export const writeAction = async (formData: FormData) => {
+  const supabase = createClient()
+  const post = formData.get('post') as string
+  const time = new Date().toISOString()
+  const { data: userData, error: userDataError } = await supabase.auth.getUser()
+
+  if (userDataError) {
+    return userDataError.code
+  } else if (!userData) {
+    return
+  }
+
+  const { error } = await supabase.from('posts').insert({ post: post, created_at: time })
+
+  if (error) {
+    return error.code
+  }
+
+  return
+}

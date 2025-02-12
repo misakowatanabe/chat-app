@@ -2,11 +2,15 @@
 
 import { useEffect, useState } from 'react'
 import supabase from 'utils/supabase/client'
+import { format, parseISO } from 'date-fns'
+import { Input } from 'components/ui/input'
+import { SubmitButton } from 'components/submit-button'
+import { writeAction } from '@/app/actions'
 
 type Post = {
   id: number
-  title: string
-  test: boolean
+  post: string
+  created_at: string
 }
 
 type TestProps = {
@@ -45,9 +49,26 @@ export function RealtimePosts({ serverPosts }: TestProps) {
       .subscribe()
 
     return () => {
-      channelA.unsubscribe()
+      supabase.removeChannel(channelA)
     }
   }, [])
 
-  return <pre>{JSON.stringify(posts, null, 2)}</pre>
+  return (
+    <>
+      <div>
+        {posts.map((el) => (
+          <div key={el.id} className="flex flex-col">
+            <div>{el.post}</div>
+            <div>{format(parseISO(el.created_at), 'HH:mm:ss eeee do MMM, yyyy')}</div>
+          </div>
+        ))}
+      </div>
+      <form className="flex-1 flex flex-col min-w-64">
+        <Input name="post" placeholder="Write here..." />
+        <SubmitButton pendingText="Writing..." formAction={writeAction}>
+          Write
+        </SubmitButton>
+      </form>
+    </>
+  )
 }
